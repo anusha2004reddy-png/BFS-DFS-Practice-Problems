@@ -1,0 +1,26 @@
+import heapq
+class Solution:
+    def spanningTree(self, V, edges):
+        adj=[]
+        for _ in range(V):
+            adj.append([])
+        for u,v,wt in edges:
+            adj[u].append((v,wt))
+            adj[v].append((u,wt))
+        vis=[0]*V
+        pq=[]
+        sum=0
+        heapq.heappush(pq,(0,0))
+        while(len(pq)>0):
+            wt,node=heapq.heappop(pq)
+            if(vis[node]==1):
+                continue
+            vis[node]=1
+            sum+=wt
+            for adjNode,wt in adj[node]:
+                if(vis[adjNode]==0):
+                    heapq.heappush(pq,(wt,adjNode))
+        return sum
+obj=Solution()
+result=obj.spanningTree(V = 3,edges = [[0, 1, 5], [1, 2, 3], [0, 2, 1]])
+print(result)
